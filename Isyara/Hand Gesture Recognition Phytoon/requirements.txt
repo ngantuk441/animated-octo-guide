@@ -1,5 +1,9 @@
 Flask
-gunicorn
-mediapipe
+Flask-SQLAlchemy
+Werkzeug
 opencv-python-headless
-numpy
+mediapipe
+python-dotenv
+google-genai
+pandas
+gunicorn
