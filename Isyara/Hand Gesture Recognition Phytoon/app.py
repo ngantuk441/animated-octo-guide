@@ -70,6 +70,8 @@ with open(os.path.join(BASE_DIR, "angka_model.pkl"), "rb") as f:
 current_mode = "alfabet"
 
 # ── MEDIAPIPE ────────────────────────────────────────────────
+import mediapipe.python.solutions.hands as mp_hands
+# Baris di bawah ini (mp_hands = mp.solutions.hands) bisa kamu hapus atau beri tanda pagar # di depannya
 mp_hands   = mp.solutions.hands
 hands      = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.7)
 mp_drawing = mp.solutions.drawing_utils
