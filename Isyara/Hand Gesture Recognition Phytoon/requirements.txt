@@ -2,7 +2,7 @@ Flask
 Flask-SQLAlchemy
 Werkzeug
 opencv-python-headless
-mediapipe==0.10.14
+mediapipe
 python-dotenv
 google-genai
 pandas
