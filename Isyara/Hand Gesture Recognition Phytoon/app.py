@@ -181,38 +181,7 @@ def admin_required(f):
 
 
 def generate_frames():
-    cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    cap.set(cv2.CAP_PROP_FPS, 30)
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        predicted, confidence = process_frame(frame.copy())
-
-        frame_show = cv2.flip(frame, 1)
-        rgb        = cv2.cvtColor(frame_show, cv2.COLOR_BGR2RGB)
-        results    = hands.process(rgb)
-        if results.multi_hand_landmarks:
-            for hand_landmarks in results.multi_hand_landmarks:
-                mp_drawing.draw_landmarks(
-                    frame_show, hand_landmarks, mp_hands.HAND_CONNECTIONS,
-                    mp_drawing.DrawingSpec(color=(0, 0, 0), thickness=3, circle_radius=2),
-                    mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=2)
-                )
-                wrist   = hand_landmarks.landmark[mp_hands.HandLandmark.WRIST]
-                h, w, _ = frame_show.shape
-                cx, cy  = int(wrist.x * w), int(wrist.y * h)
-                cv2.putText(frame_show, f"{predicted} ({confidence}%)",
-                            (cx - 40, cy - 20), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 3)
-
-        _, buffer = cv2.imencode(".jpg", frame_show, [cv2.IMWRITE_JPEG_QUALITY, 70])
-        yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + buffer.tobytes() + b"\r\n")
-
+    pass # Kamera sengaja dimatikan untuk Render
 
 # ── HELPER GEMINI ─────────────────────────────────────────────
 def ask_gemini(prompt):
@@ -320,7 +289,7 @@ def dataset():
 
 @app.route("/video_feed")
 def video_feed():
-    return Response(generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame")
+    return "Kamera dimatikan di server", 200
 
 
 @app.route("/state")
