@@ -1,6 +1,7 @@
 Flask
 Flask-SQLAlchemy
 Werkzeug
+gunicorn
 opencv-python-headless
 mediapipe==0.10.30
 python-dotenv
