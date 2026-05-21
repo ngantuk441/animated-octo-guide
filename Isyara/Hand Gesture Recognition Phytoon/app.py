@@ -70,9 +70,17 @@ with open(os.path.join(BASE_DIR, "angka_model.pkl"), "rb") as f:
 current_mode = "alfabet"
 
 # ── MEDIAPIPE ────────────────────────────────────────────────
-mp_hands   = mp.solutions.hands
-hands      = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.7)
-mp_drawing = mp.solutions.drawing_utils
+try:
+    mp_hands   = mp.solutions.hands
+    mp_drawing = mp.solutions.drawing_utils
+    hands      = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.7)
+except AttributeError:
+    # Solusi alternatif jika mediapipe di server menggunakan versi GenAI baru
+    import mediapipe.python.solutions.hands as mp_hands_new
+    import mediapipe.python.solutions.drawing_utils as mp_drawing_new
+    mp_hands = mp_hands_new
+    mp_drawing = mp_drawing_new
+    hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.7)
 
 # ── GEMINI CLIENT ────────────────────────────────────────────
 gemini_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
